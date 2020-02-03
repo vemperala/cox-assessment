@@ -14,19 +14,15 @@ export class Stores extends Component {
     componentDidMount() {
         fetch('/store-api/store/list')
         .then((response) => {
-            const stores = response.json();
-            
+            return response.json();
+        })
+        .then((stores) => {
             this.setState({
                 stores
             });
-
-            return response.json();
         })
         .catch((error) => {
-            // throw error;
-            this.setState({
-                stores: storesData
-            })
+            throw error;
         })
     }
 

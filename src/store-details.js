@@ -41,9 +41,9 @@ class StoreDetailsBase extends Component {
     componentDidMount() {
         fetch(`/store-api/store/id/${this.props.match.params.id}`)
         .then((response) => {
-            // const details = response.json();
-            const details = storesData[0];
-
+            return response.json();
+        })
+        .then((details) => {
             const hours = details.hours.split('; ').reduce((accumulator, dayHours) => {
                 const [key, value] = dayHours.split(': ');
                 accumulator[key] = value;
@@ -73,6 +73,46 @@ class StoreDetailsBase extends Component {
         .catch((error) => {
             throw error;
         })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(!prevState.updated && this.state.updated) {
+            fetch(`/store-api/store/id/${this.props.match.params.id}`)
+            .then((response) => {
+                return response.json();     
+            })
+            .then((details) => {
+                const hours = details.hours.split('; ').reduce((accumulator, dayHours) => {
+                    const [key, value] = dayHours.split(': ');
+                    accumulator[key] = value;
+                    return accumulator;
+                }, {});
+
+                this.setState({
+                    details,
+                    editedDetails: {
+                        id: details.id,
+                        type: details.type,
+                        name: details.name,
+                        address: details.address,
+                        address2: details.address2,
+                        city: details.city,
+                        state: details.state,
+                        zip: details.zip,
+                        location: {
+                            lat: details.location.lat,
+                            lon: details.location.lon
+                        },
+                        hours,
+                        services: details.services.join('. ')
+                    },
+                    updated: false
+                })
+            })
+            .catch((error) => {
+                throw error;
+            })
+        }
     }
 
     startEditing = () => {
