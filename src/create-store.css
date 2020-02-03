@@ -1,0 +1,9 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.hours {
+    display: flex;
+    flex-direction: column;
+}

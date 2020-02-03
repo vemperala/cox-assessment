@@ -1,0 +1,13 @@
+.store-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.store-item {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.store-item:hover {
+    color: blue
+}
