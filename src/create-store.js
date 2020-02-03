@@ -81,7 +81,7 @@ class CreateStoreBase extends Component {
             return index === 0 ? `${day}: ${this.state.hours[day]};` : `${accumulator} ${day}: ${this.state.hours[day]};`
         }, '');
 
-        const services = this.state.services.split('. ');
+        const services = this.state.services.split('. ').slice(0, -1);
 
         const body = JSON.stringify({
             ...this.state,
@@ -91,6 +91,9 @@ class CreateStoreBase extends Component {
 
         fetch('/store-api/store/create', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body
         })
         .then(() => {

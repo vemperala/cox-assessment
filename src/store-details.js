@@ -191,7 +191,7 @@ class StoreDetailsBase extends Component {
             return index === 0 ? `${day}: ${this.state.editedDetails.hours[day]};` : `${accumulator} ${day}: ${this.state.editedDetails.hours[day]};`
         }, '');
 
-        const services = this.state.editedDetails.services.split('. ');
+        const services = this.state.editedDetails.services.split('. ').slice(0, -1);
 
         const body = JSON.stringify({
             ...this.state.editedDetails,
@@ -201,6 +201,9 @@ class StoreDetailsBase extends Component {
 
         fetch('/store-api/store/update', {
             method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body
         })
         .then(() => {
