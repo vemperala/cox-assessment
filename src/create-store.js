@@ -23,7 +23,7 @@ class CreateStoreBase extends Component {
                 Mon: '',
                 Tue: '',
                 Wed: '',
-                Thu: '',
+                Thurs: '',
                 Fri: '',
                 Sat: '',
                 Sun: ''
@@ -81,7 +81,7 @@ class CreateStoreBase extends Component {
             return index === 0 ? `${day}: ${this.state.hours[day]};` : `${accumulator} ${day}: ${this.state.hours[day]};`
         }, '');
 
-        const services = this.state.services.split('. ').slice(0, -1);
+        const services = this.state.services.split('.').slice(0, -1);
 
         const body = JSON.stringify({
             ...this.state,
@@ -217,10 +217,10 @@ class CreateStoreBase extends Component {
                         <label>
                             Thu:
                             <input
-                                name="Thu"
+                                name="Thurs"
                                 placeholder='00:30-12:30'
                                 onChange={this.handleHoursChange} 
-                                value={this.state.hours.Thu}
+                                value={this.state.hours.Thurs}
                         />
                         </label>
                         <label>
@@ -255,10 +255,11 @@ class CreateStoreBase extends Component {
                         Services:
                         <textarea
                             name="services"
-                            placeholder='Enter services seperated by a period followed by space. Example: "Service1. Service2. Service3"'
+                            placeholder='Enter services seperated by a period followed by space. Example: "Service1. Service2. Service3."'
                             onChange={this.handleInputChange} 
                             value={this.state.services}
                         />
+                        <em>Enter services seperated by a period followed by space. Example: Service1. Service2. Service3.</em>
                     </label>
                 </form>
                 <button onClick={this.handleCreate}>Submit</button>

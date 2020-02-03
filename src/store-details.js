@@ -27,7 +27,7 @@ class StoreDetailsBase extends Component {
                     Mon: '',
                     Tue: '',
                     Wed: '',
-                    Thu: '',
+                    Thurs: '',
                     Fri: '',
                     Sat: '',
                     Sun: ''
@@ -46,9 +46,12 @@ class StoreDetailsBase extends Component {
         .then((details) => {
             const hours = details.hours.split('; ').reduce((accumulator, dayHours) => {
                 const [key, value] = dayHours.split(': ');
+                console.log(key, value);
                 accumulator[key] = value;
                 return accumulator;
             }, {});
+
+            console.log(hours);
 
             this.setState({
                 details,
@@ -122,7 +125,7 @@ class StoreDetailsBase extends Component {
     }
 
     deleteStore = () => {
-        fetch(`/store-api/store/id/7${this.props.match.params.id}`, {
+        fetch(`/store-api/store/delete/${this.props.match.params.id}`, {
             method: 'DELETE'
         })
         .then(() => {
@@ -191,7 +194,7 @@ class StoreDetailsBase extends Component {
             return index === 0 ? `${day}: ${this.state.editedDetails.hours[day]};` : `${accumulator} ${day}: ${this.state.editedDetails.hours[day]};`
         }, '');
 
-        const services = this.state.editedDetails.services.split('. ').slice(0, -1);
+        const services = this.state.editedDetails.services.split('.').slice(0, -1);
 
         const body = JSON.stringify({
             ...this.state.editedDetails,
@@ -337,10 +340,10 @@ class StoreDetailsBase extends Component {
                                     <label>
                                         Thu:
                                         <input
-                                            name="Thu"
+                                            name="Thurs"
                                             placeholder='00:30-12:30'
                                             onChange={this.handleHoursChange} 
-                                            value={this.state.editedDetails.hours.Thu}
+                                            value={this.state.editedDetails.hours.Thurs}
                                     />
                                     </label>
                                     <label>
@@ -375,10 +378,11 @@ class StoreDetailsBase extends Component {
                                     Services:
                                     <textarea
                                         name="services"
-                                        placeholder='Enter services seperated by a period followed by space. Example: "Service1. Service2. Service3"'
+                                        placeholder='Enter services seperated by a period . Example: "Service1.Service2.Service3."'
                                         onChange={this.handleInputChange} 
                                         value={this.state.editedDetails.services}
                                     />
+                                    <em>Enter services seperated by a period . Example: Service1.Service2.Service3.</em>
                                 </label>
                             </form>
                         </>
