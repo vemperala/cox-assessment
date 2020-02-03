@@ -4,6 +4,7 @@ import './App.css';
 import {Stores} from './stores';
 import {StoreDetails} from './store-details';
 import {CreateStore} from './create-store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   BrowserRouter as Router,
