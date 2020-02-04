@@ -117,7 +117,7 @@ class StoreDetailsBase extends Component {
                             lon: details.location.lon
                         },
                         hours,
-                        services: details.services.join('. ')
+                        services
                     },
                     updated: false
                 })
