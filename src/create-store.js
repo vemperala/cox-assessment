@@ -130,7 +130,6 @@ class CreateStoreBase extends Component {
 
 
     render() {
-        console.log(this.state);
         return (
             <>
                 <Container>
@@ -237,7 +236,7 @@ class CreateStoreBase extends Component {
                                                     <Form.Label>Lat:  
                                                             <input
                                                                 name="lat"
-                                                                onChange={this.handleInputChange} 
+                                                                onChange={this.handleLocationChange} 
                                                                 value={this.state.location.lat}
                                                             />
                                                     </Form.Label>
@@ -248,7 +247,7 @@ class CreateStoreBase extends Component {
                                                     <Form.Label>Lon:  
                                                             <input
                                                                 name="lon"
-                                                                onChange={this.handleInputChange} 
+                                                                onChange={this.handleLocationChange} 
                                                                 value={this.state.location.lon}
                                                             />
                                                     </Form.Label>

@@ -53,7 +53,7 @@ export class Stores extends Component {
                         
                             {
                                 this.state.stores.map(store => 
-                                    <tr>
+                                    <tr key={store.id}> 
                                         <td>
                                         <Link className='store-item' key={store.id} to={`/item/${store.id}`}>{store.name}</Link>
                                         </td>

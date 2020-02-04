@@ -50,12 +50,13 @@ class StoreDetailsBase extends Component {
         .then((details) => {
             const hours = details.hours.split('; ').reduce((accumulator, dayHours) => {
                 const [key, value] = dayHours.split(': ');
-                console.log(key, value);
                 accumulator[key] = value;
                 return accumulator;
             }, {});
 
-            console.log(hours);
+            const storeServices = details.services;
+
+            const services = storeServices.length ? (storeServices.length === 1 ? `${storeServices[0]}.` : `${storeServices.join('.')}.`) : storeServices;
 
             this.setState({
                 details,
@@ -73,7 +74,7 @@ class StoreDetailsBase extends Component {
                         lon: details.location.lon
                     },
                     hours,
-                    services: details.services.join('. ')
+                    services
                 }
             })
         })
@@ -94,6 +95,11 @@ class StoreDetailsBase extends Component {
                     accumulator[key] = value;
                     return accumulator;
                 }, {});
+
+                const storeServices = details.services;
+
+                const services = storeServices.length ? (storeServices.length === 1 ? `${storeServices[0]}.` : `${storeServices.join('.')}.`) : storeServices;
+    
 
                 this.setState({
                     details,
@@ -129,45 +135,37 @@ class StoreDetailsBase extends Component {
     }
 
     startCancel = () => {
+        const details = this.state.details;
+        const hours = details.hours.split('; ').reduce((accumulator, dayHours) => {
+            const [key, value] = dayHours.split(': ');
+            accumulator[key] = value;
+            return accumulator;
+        }, {});
+
+        const storeServices = details.services;
+
+        const services = storeServices.length ? (storeServices.length === 1 ? `${storeServices[0]}.` : `${storeServices.join('.')}.`) : storeServices;
+
         this.setState({
-            editing: false
+            editing: false,
+            editedDetails: {
+                id: details.id,
+                type: details.type,
+                name: details.name,
+                address: details.address,
+                address2: details.address2,
+                city: details.city,
+                state: details.state,
+                zip: details.zip,
+                location: {
+                    lat: details.location.lat,
+                    lon: details.location.lon
+                },
+                hours,
+                services
+            }
         })
 
-        fetch(`/store-api/store/id/${this.props.match.params.id}`)
-            .then((response) => {
-                return response.json();     
-            })
-            .then((details) => {
-                const hours = details.hours.split('; ').reduce((accumulator, dayHours) => {
-                    const [key, value] = dayHours.split(': ');
-                    accumulator[key] = value;
-                    return accumulator;
-                }, {});
-
-                this.setState({
-                    details,
-                    editedDetails: {
-                        id: details.id,
-                        type: details.type,
-                        name: details.name,
-                        address: details.address,
-                        address2: details.address2,
-                        city: details.city,
-                        state: details.state,
-                        zip: details.zip,
-                        location: {
-                            lat: details.location.lat,
-                            lon: details.location.lon
-                        },
-                        hours,
-                        services: details.services.join('. ')
-                    },
-                    updated: false
-                })
-            })
-            .catch((error) => {
-                throw error;
-            })
     }
 
     deleteStore = () => {
@@ -241,7 +239,7 @@ class StoreDetailsBase extends Component {
             editedDetails: {
                 ...this.state.editedDetails,
                 hours: {
-                    ...this.state.hours,
+                    ...this.state.editedDetails.hours,
                     [name]: value
                 }
             }
@@ -290,9 +288,6 @@ class StoreDetailsBase extends Component {
 
         return (
             <>
-
-                
-
                 {
                     this.state.editing ? (
                         <>
