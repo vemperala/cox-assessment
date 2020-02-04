@@ -1,7 +1,4 @@
-.store-list {
-    display: flex;
-    flex-direction: column;
-}
+
 
 .store-item {
     cursor: pointer;
