@@ -12,29 +12,42 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
+import { render } from '@testing-library/react';
+import { Layout } from './components/Layout';
+import {NavigationBar} from './components/NavigationBar';
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route
-          exact={true}
-          path='/'
-          component={Stores}
-        />
-        <Route
-          exact={true}
-          path='/create'
-          component={CreateStore}
-        />
-        <Route
-          path='/item/:id'
-          component={StoreDetails}
-        />
-      </Switch>
-    </Router>
-  );
+
+    return (
+
+      <React.Fragment>
+        <NavigationBar />
+        <Layout>
+          <Router>
+            <Switch>
+                <Route
+                  exact={true}
+                  path='/'
+                  component={Stores}
+                />
+                <Route
+                  exact={true}
+                  path='/create'
+                  component={CreateStore}
+                />
+                <Route
+                  path='/item/:id'
+                  component={StoreDetails}
+                />
+             </Switch>
+          </Router>
+        </Layout>
+         
+      </React.Fragment>
+     
+    );
+
+
 }
 
 export default App;
